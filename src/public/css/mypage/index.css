@@ -1,206 +1,220 @@
-/* ========== MyPage Base ========== */
-.mypage {
-    max-width: 1200px;
-    /* 画像を大きく見せるため 1200px に統一 */
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: Arial, sans-serif;
+/* Base */
+.mypage{
+  max-width: 1540px;
+  margin: 32px auto 60px;
+  padding: 0 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
-/* ========== Header / Title ========== */
-.mypage__header {
-    margin-bottom: 16px;
+/* Profile */
+.profile{
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 22px;
+  align-items: center;
+  margin: 18px 0;
 }
 
-.mypage__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
+.profile__image{
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #eee;
 }
 
-/* ========== Profile ========== */
-.profile {
-    display: grid;
+.profile__image--default{
+  background-color: #d9d9d9;
+}
+
+.profile__meta{
+  display: grid;
+  gap: 8px;
+}
+
+.profile__name{
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.profile__stars{
+  display: flex;
+  gap: 6px;
+  line-height: 1;
+}
+
+.star{
+  font-size: 18px;
+  color: #cfcfcf;
+}
+
+.star.is-on{
+  color: #f5c400;
+}
+
+.profile__edit-button{
+  justify-self: end;
+  padding: 10px 18px;
+  background: #fff;
+  color: #ff4b4b;
+  text-decoration: none;
+  border: 1px solid #ff4b4b;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Tabs */
+.tabs{
+  margin-top: 10px;
+  border-bottom: 1px solid #9a9a9a;
+}
+
+.tabs__list{
+  display: flex;
+  gap: 46px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tabs__link{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0 12px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 700;
+}
+
+.tabs__link.is-active{
+  color: #ff4b4b;
+}
+
+.tabs__badge{
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ff2e2e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Items */
+.mypage__items{
+  padding-top: 26px;
+}
+
+.item-list{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 44px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list__empty{
+  color: #666;
+  margin-top: 16px;
+}
+
+.item-card{
+  padding: 0;
+  margin: 0;
+}
+
+.item-card__link{
+  display: block;
+  text-decoration: none;
+}
+
+.item-card__thumb{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #d9d9d9;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.item-card__image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.item-card__badge{
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 4px 10px;
+  background: rgba(255, 0, 0, 0.85);
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .08em;
+  border-radius: 50%;
+}
+
+.item-card__badge--sold{
+  background: rgba(0, 0, 0, 0.70);
+}
+
+/* A11y */
+.visually-hidden{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive: general */
+@media (max-width: 980px){
+  .item-list{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+}
+@media (max-width: 720px){
+  .item-list{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+}
+@media (max-width: 520px){
+  .item-list{ grid-template-columns: 1fr; }
+}
+
+/* Tablet: 768–850px (崩れ防止) */
+@media (min-width: 768px) and (max-width: 850px){
+  .profile{
     grid-template-columns: 96px 1fr auto;
+    gap: 14px;
+  }
+
+  .tabs__list{
     gap: 16px;
-    align-items: center;
-    margin-bottom: 24px;
-}
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs__list::-webkit-scrollbar{ display: none; }
 
-.profile__image {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #eee;
-}
-
-.profile__image--default {
-    background-color: #ccc;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    display: block;
-}
-
-.profile__name {
-    font-size: 1.125rem;
-    font-weight: 700;
-}
-
-.profile__edit-button {
-    margin-left: auto;
-    padding: 8px 16px;
-    background: #f66;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    display: inline-block;
-}
-
-/* ========== Tabs ========== */
-.tabs {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.tabs__list {
-    display: flex;
-    gap: 16px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.tabs__item {
-    margin: 0;
-    padding: 0;
-}
-
-.tabs__link {
-    display: inline-block;
-    padding: 10px 12px 8px;
-    text-decoration: none;
-    color: #333;
-    border-bottom: 2px solid transparent;
-}
-
-.tabs__link.is-active {
-    border-bottom-color: #f66;
-    font-weight: 700;
-}
-
-/* ========== Item List (Grid) ========== */
-/* デフォルト：PC 3列 → 画像もそこそこ大きく */
-.item-list {
-    display: grid;
+  .item-list{
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    gap: 22px;
+  }
 }
 
-@media (max-width: 900px) {
-    .item-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .item-list {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* もっと大きく：PC 2列（正方形維持） */
-.item-list--xl {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-}
-
-@media (max-width: 900px) {
-    .item-list--xl {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* 最大：1列ぶち抜き（正方形維持） */
-.item-list--xxl {
-    grid-template-columns: 1fr;
-    gap: 28px;
-}
-
-/* 空状態 */
-.item-list__empty {
-    color: #666;
-    margin-top: 8px;
-}
-
-/* ========== Item Card ========== */
-.item-card {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-}
-
-.item-card__figure {
-    margin: 0;
-}
-
-/* 正方形サムネ（全サイズで統一） */
-.item-card__thumb {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 8px;
-}
-
-.item-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* SOLD badge */
-.item-card__badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    padding: 4px 10px;
-    background: rgba(255, 0, 0, 0.85);
-    color: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    border-radius: 6px;
-    letter-spacing: .08em;
-}
-
-.item-card__badge--sold {}
-
-/* Name */
-.item-card__name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin: 8px 0 0;
-}
-
-/* ========== A11y Utility ========== */
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+/* PC: 1400–1540px (余白管理で崩れ防止) */
+@media (min-width: 1400px) and (max-width: 1540px){
+  .mypage{
+    padding: 0 28px;
+  }
 }

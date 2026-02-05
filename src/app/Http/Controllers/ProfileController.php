@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Purchase;
+use App\Models\Review;
 use App\Models\UserAddress;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -16,7 +18,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $user = auth()->user()->load('address');
+        $user = auth()->user()->loadMissing('address');
         $address = $user->address;
 
         return view('mypage.profile_setup', compact('user', 'address'));
@@ -30,59 +32,100 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         DB::transaction(function () use ($request, $user) {
-            // 画像アップロードがあれば保存
+            // プロフィール画像
             if ($request->hasFile('profile_image')) {
-                // 既存画像があれば削除（public ディスク）
                 if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
                     Storage::disk('public')->delete($user->profile_image);
                 }
-                // 保存先: storage/app/public/profiles
-                $path = $request->file('profile_image')->store('profiles', 'public');
-                $user->profile_image = $path; // 例: profiles/xxxx.jpg
+
+                $user->profile_image = $request->file('profile_image')->store('profiles', 'public');
             }
 
-            // ユーザー本体の更新（ここでは名前など、usersテーブル側だけ）
+            // ユーザー情報更新
             $user->name = $request->input('name');
             $user->save();
 
-            // 住所は user_addresses テーブルへ保存（なければ作成、あれば更新）
-            // ※ フォームの name が日本語のままなら fallback で拾う
+            // 住所情報（フォームのキーが英語/日本語どちらでも受ける互換対応）
             $payload = [
-                'postcode' => $request->input('postcode',  $request->input('郵便番号')),
-                'address'  => $request->input('address',   $request->input('住所')),
-                'building' => $request->input('building',  $request->input('建物名')),
+                'postcode' => $request->input('postcode', $request->input('郵便番号')),
+                'address'  => $request->input('address', $request->input('住所')),
+                'building' => $request->input('building', $request->input('建物名')),
             ];
 
-            // 必須の postcode/address が null のままにならないように、必要なら ProfileRequest で required に
             UserAddress::updateOrCreate(
                 ['user_id' => $user->id],
                 $payload
             );
         });
 
-        // 商品一覧に遷移
-        return redirect()->route('items.index')->with('success', 'プロフィールを更新しました。');
+        return redirect()
+            ->route('items.index')
+            ->with('success', 'プロフィールを更新しました。');
     }
 
     /**
-     * マイページ（購入/出品商品）表示
+     * マイページ（出品 / 購入 / 取引中）
      */
     public function show(Request $request)
     {
         $user = auth()->user();
-        $tab = $request->query('tab', 'sell'); // デフォルトは出品
+        $tab  = $request->query('tab', 'sell');
 
-        if ($tab === 'buy') {
-            // 自分の購入履歴（itemを同時ロード）→ null安全にitemだけ取り出し
-            $purchases    = $user->purchases()->with('item')->latest()->get();
-            $items        = $purchases->pluck('item')->filter();     // Collection<Item>
-            $purchasedIds = $items->pluck('id')->all();              // [1, 5, 9, ...]
-        } else {
-            // 自分が出品した商品
-            $items        = $user->items()->latest()->get();
-            $purchasedIds = []; // 売買タブ以外は空でOK
+        // 受けた評価の平均（四捨五入で整数表示）
+        $avg = Review::where('ratee_id', $user->id)->avg('score');
+        $rating = is_null($avg) ? null : (int) round($avg);
+
+        // 取引中（未読数の集計にも使用）
+        $tradingPurchases = Purchase::with(['item.user', 'messages'])
+            ->whereIn('status', [Purchase::STATUS_TRADING, Purchase::STATUS_BUYER_REVIEWED])
+            ->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                  ->orWhereHas('item', function ($q2) use ($user) {
+                      $q2->where('user_id', $user->id);
+                  });
+            })
+            ->get();
+
+        $tradingPurchases->each(function ($purchase) use ($user) {
+            $purchase->unread_count = $purchase->unreadCountFor($user->id);
+        });
+
+        $unreadDealCount = $tradingPurchases->where('unread_count', '>', 0)->count();
+
+        // 共通で渡す値
+        $base = [
+            'user'            => $user,
+            'tab'             => $tab,
+            'unreadDealCount' => $unreadDealCount,
+            'rating'          => $rating,
+        ];
+
+        if ($tab === 'deal') {
+            $purchases = $tradingPurchases->sortByDesc('last_message_at')->values();
+
+            return view('mypage.index', $base + [
+                'tab'       => 'deal',
+                'purchases' => $purchases,
+            ]);
         }
 
-        return view('mypage.index', compact('user', 'items', 'tab', 'purchasedIds'));
+        if ($tab === 'buy') {
+            $purchases    = $user->purchases()->with('item')->latest()->get();
+            $items        = $purchases->pluck('item')->filter();
+            $purchasedIds = $items->pluck('id')->all();
+
+            return view('mypage.index', $base + [
+                'items'        => $items,
+                'purchasedIds' => $purchasedIds,
+            ]);
+        }
+
+        $items = $user->items()->latest()->get();
+
+        return view('mypage.index', $base + [
+            'tab'          => 'sell',
+            'items'        => $items,
+            'purchasedIds' => [],
+        ]);
     }
 }

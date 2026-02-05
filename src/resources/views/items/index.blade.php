@@ -14,7 +14,6 @@
     @endphp
 
     <div class="tab-menu">
-        {{-- おすすめ：一旦 ?tab=recommend（コントローラが "/" に正規化） --}}
         <a href="{{ route('items.index', array_merge(['tab' => 'recommend'], $qs)) }}"
             class="{{ $tab === 'recommend' ? 'active' : '' }}">
             おすすめ

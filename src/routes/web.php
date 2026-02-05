@@ -13,6 +13,9 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Middleware\FortifyLoginFormRequest;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\DealChatController;
+use App\Http\Controllers\DealMessageController;
+use App\Http\Controllers\DealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +93,27 @@ Route::middleware('auth')->group(function () {
         Route::get('/{item}/success', [PurchaseController::class, 'success'])->name('success');
         Route::get('/{item}/cancel',  [PurchaseController::class, 'cancel'])->name('cancel');
     });
+
+     // 取引チャット画面
+    Route::get('/deals/{purchase}', [DealChatController::class, 'show'])
+        ->name('deals.show');
+
+    // 取引メッセージ投稿
+    Route::post('/deals/{purchase}/messages', [DealMessageController::class, 'store'])
+        ->name('deals.messages.store');
+        
+    // 追加：編集・削除
+    Route::patch('/deals/{purchase}/messages/{message}', [DealMessageController::class, 'update'])
+        ->name('deals.messages.update');
+
+    Route::delete('/deals/{purchase}/messages/{message}', [DealMessageController::class, 'destroy'])
+        ->name('deals.messages.destroy');
+
+    Route::post('/deals/{purchase}/complete', [DealController::class, 'complete'])
+    ->name('deals.complete');
+
+Route::post('/deals/{purchase}/complete-seller', [DealController::class, 'completeSeller'])
+    ->name('deals.complete_seller');
 });
 
 // Webhook は公開（認証なし）

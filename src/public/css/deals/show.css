@@ -1,0 +1,724 @@
+/* =================
+  Layout
+================= */
+.deal { background: #fff; }
+
+.deal__container{
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.deal__layout{
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+.deal__sidebar{
+  width: 259px;
+  background: #868686;
+  border-right: 1px solid #d5d5d5;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.deal__main{
+  flex: 1;
+  padding: 0;
+  min-width: 0;
+}
+
+/* =================
+  Sidebar
+================= */
+.sidebar__title{
+  font-size: 30px;
+  font-weight: 700;
+  height: 36px;
+  padding-left: 30px;
+  margin-bottom: 50px;
+  color: #ffffff;
+}
+
+.sidebar__list{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.sidebar__item{
+  display: flex;
+  width: 197px;
+  height: 40px;
+  margin-left: 18px;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12px;
+  background: #EEEFEB;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #111;
+}
+
+.sidebar__item-name{
+  font-size: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.sidebar__empty{
+  color: #666;
+  font-size: 14px;
+  padding: 12px 4px;
+}
+
+/* =================
+  Header / Item
+================= */
+.deal__header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  z-index: 10;
+  background: #fff;
+}
+
+.deal__header-left{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.deal__user{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.deal__avatar{
+  width: 79px;
+  height: 79px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  flex: 0 0 auto;
+}
+
+.deal__username{
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.deal__header-title{
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deal__complete-button{
+  border: none;
+  background: #FF8282;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  z-index: 11;
+  white-space: nowrap;
+}
+
+.deal__completed-label{
+  font-weight: 700;
+  color: #666;
+}
+
+.deal__item{
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e5e5;
+  min-width: 0;
+}
+
+.deal__item-thumb img{
+  width: 203px;
+  height: 206px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.deal__item-thumb--placeholder{
+  width: 64px;
+  height: 64px;
+  background: #eee;
+  border-radius: 8px;
+}
+
+.deal__item-name{
+  font-weight: 700;
+  font-size: 48px;
+  margin: 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deal__item-price{
+  color: #333;
+  font-size: 36px;
+}
+
+/* =================
+  Chat
+================= */
+.deal__chat{
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+/* Messages */
+.chat__messages{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 18px 10px;
+  background: #fff;
+}
+
+/* Row */
+.chat__row{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 16px;
+  padding: 0;
+  align-items: flex-start;
+}
+
+.chat__row.is-mine{
+  align-items: flex-end;
+}
+
+/* Meta */
+.chat__meta{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat__meta.is-right{
+  flex-direction: row-reverse;
+}
+
+.chat__avatar{
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  flex: 0 0 auto;
+}
+
+.chat__name{
+  font-size: 11px;
+  color: #666;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* Bubble */
+.chat__bubble-wrap{
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 75%;
+  min-width: 0;
+}
+
+.chat__bubble-wrap.is-right{
+  align-items: flex-end;
+  margin-left: auto; /* 画像だけでも右寄せを確実にする */
+}
+
+.chat__bubble{
+  display: inline-block;
+  width: fit-content;
+  max-width: 640px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+/* Text bubble (Figma Rectangle 29) */
+.chat__body{
+  width: 461px;
+  height: 60px;
+  background: #e5e5e5;
+  border-radius: 4px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Image bubble */
+.chat__image{
+  margin-top: 8px;
+  width: 200px;       /* 画像は常に小さめ */
+  max-width: 200px;
+}
+
+.chat__image img{
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Actions */
+.chat__actions{
+  position: absolute;
+  right: 8px;
+  bottom: -14px;
+  display: flex;
+  gap: 10px;
+  line-height: 1;
+}
+
+.chat__action-link{
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.chat__action-link:hover{
+  text-decoration: underline;
+}
+
+.chat__action-form{
+  display: inline;
+}
+
+/* Edit */
+.chat__edit{
+  display: none !important;
+}
+
+.chat__body.is-editing{
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.12);
+}
+
+/* =================
+  Form
+================= */
+.chat__form{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 18px;
+  border-top: 1px solid #e5e5e5;
+  background: #fff;
+}
+
+.chat__form-row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap; /* タブレットで崩れない */
+}
+
+.chat__errors{
+  background: #fff0f0;
+  border: 1px solid #ffb3b3;
+  color: #b00020;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.chat__error + .chat__error{
+  margin-top: 4px;
+}
+
+.chat__input{
+  width: auto;
+  min-width: 220px;
+  height: 44px;
+  flex: 1 1 320px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.chat__image-btn{
+  width: 143px;
+  height: 44px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 2px solid #ff5555;
+  color: #ff5555;
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.chat__image-btn input[type="file"]{
+  display: none;
+}
+
+.chat__send{
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat__send img{
+  width: 70px;
+  height: 50px;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.chat__send:hover img{
+  opacity: 1;
+}
+
+/* =================
+  Modals
+================= */
+.complete-modal{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1000;
+}
+.complete-modal.is-open{ display: block; }
+
+.complete-modal__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+}
+
+.complete-modal__panel{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+
+.complete-modal__title{
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.complete-modal__sub{
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.complete-modal__actions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+}
+
+.complete-modal__cancel{
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  cursor: pointer;
+}
+
+.complete-modal__submit{
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: none;
+  background: #ff4d4f;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================
+   Review Modal (Figma寄せ)
+========================= */
+
+/* 背景の暗転 + 中央配置 */
+.review-modal{
+  position: fixed;
+  inset: 0;
+  display: none;            /* ← is-open のときだけ表示 */
+  place-items: center;
+  z-index: 9999;
+}
+.review-modal.is-open{
+  display: grid;
+}
+
+/* 背景の暗転 */
+.review-modal__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+}
+
+/* パネル本体（Figma: 598x367 / radius 15 / border 1 / bg #FDFCE6） */
+.review-modal__panel{
+  position: relative;
+  width: 598px;
+  height: 367px;
+  background: #FDFCE6;
+  border: 1px solid #000;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+
+/* 上部タイトル */
+.review-modal__head{
+  padding: 18px 22px 10px;
+}
+.review-modal__title{
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111;
+}
+
+/* 本文エリア */
+.review-modal__body{
+  padding: 0 22px;
+}
+.review-modal__sub{
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 星エリア（大きく、横並び） */
+.review-modal__stars{
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 22px;
+}
+
+/* 星ボタン（デフォルトボタン感消す） */
+.review-star{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 80px;          /* ←星の大きさ：必要なら 72〜90で調整 */
+  line-height: 1;
+  color: #D9D9D9;           /* 未選択（グレー） */
+  user-select: none;
+}
+
+/* 選択済み（黄色） */
+.review-star.is-full{
+  color: #F5D547;
+}
+
+/* 0.5対応（左半分だけ黄色に見せる） */
+.review-star.is-half{
+  color: transparent;
+  background: linear-gradient(90deg, #F5D547 50%, #D9D9D9 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* 下の仕切り線（Figmaの横線） */
+.review-modal__foot{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #000;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: transparent; /* パネルと同色 */
+}
+
+/* 送信ボタン（右下・ピンク） */
+.review-modal__submit{
+  border: 0;
+  background: #F08B8B;     /* 近いピンク。好みで調整OK */
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.review-modal__submit:hover{
+  filter: brightness(0.98);
+}
+.review-modal__submit:active{
+  transform: translateY(1px);
+}
+
+/* 画面が狭い時の保険（スマホで崩れにくく） */
+@media (max-width: 660px){
+  .review-modal__panel{
+    width: calc(100vw - 24px);
+    height: auto;
+    min-height: 320px;
+  }
+  .review-modal__foot{
+    position: static;
+    margin-top: 18px;
+  }
+  .review-star{
+    font-size: 64px;
+  }
+}
+
+/* =========================
+  Tablet: 768–850px
+  - sidebarを上に、取引リスト横スクロール
+========================= */
+@media (min-width: 768px) and (max-width: 850px){
+  .deal__layout{
+    flex-direction: column;
+  }
+
+  .deal__sidebar{
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #d5d5d5;
+  }
+
+  .sidebar__title{
+    margin-bottom: 16px;
+    padding-left: 12px;
+    font-size: 22px;
+  }
+
+  .sidebar__list{
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .sidebar__item{
+    width: 240px;
+    margin-left: 0;
+    flex: 0 0 auto;
+  }
+
+  .deal__header-title{
+    font-size: 24px;
+  }
+
+  .deal__username{
+    font-size: 26px;
+  }
+
+  .deal__avatar{
+    width: 56px;
+    height: 56px;
+  }
+
+  .deal__item{
+    gap: 16px;
+  }
+
+  .deal__item-name{
+    font-size: 32px;
+  }
+
+  .deal__item-price{
+    font-size: 22px;
+  }
+
+  .chat__body{
+    width: min(461px, 80vw);
+  }
+}
+
+/* =========================
+  PC: 1400–1540px
+  - containerで中央寄せして崩れない
+========================= */
+@media (min-width: 1400px) and (max-width: 1540px){
+  .deal__container{
+    padding: 0 20px;
+  }
+}
